@@ -1,0 +1,9 @@
+[submodule "orion"]
+	path = orion
+	url = git@github.com:linea-it/orion.git
+[submodule "sirius"]
+	path = sirius
+	url = git@github.com:linea-it/sirius.git
+[submodule "centaurus"]
+	path = centaurus
+	url = git@github.com:linea-it/centaurus.git
