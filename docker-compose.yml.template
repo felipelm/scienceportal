@@ -7,24 +7,21 @@ services:
       - ./centaurus/global-env
   centaurus:
     build: ./centaurus
-    user: ${CURRENT_UID}
     env_file:
       - ./centaurus/global-env
     environment:
       - PORT=7000
       - HOST=0.0.0.0
-      - DEBUG=false
+      - FLASK_ENV=development
       - INITIALIZE_DB=true
     entrypoint: /bin/sh run.sh
     working_dir: /app
-    ports:
-      - 7000:7000
     volumes:
       - ./centaurus:/app
     depends_on:
       - db
   sirius:
-    build: ./sirius
+    image: node:9.10
     working_dir: /src/app
     environment:
       - PORT=7001
@@ -33,7 +30,7 @@ services:
     volumes:
       - ./sirius/:/src/app/
   orion:
-    build: ./orion
+    image: node:9.10
     working_dir: /src/app
     environment:
       - PORT=7002
@@ -46,8 +43,8 @@ services:
       - 80:8080
     volumes:
       - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./orion/build:/var/www/dashboard
-      - ./sirius/build:/var/www/user-interface
+      - ./orion/build:/var/www/dashboard:ro
+      - ./sirius/build:/var/www/user-interface:ro
     cap_drop:
       - ALL
     depends_on:
