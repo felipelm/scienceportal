@@ -24,31 +24,18 @@ services:
     depends_on:
       - db
   sirius:
-    image: node:8.10
-    working_dir: /src/app
-    environment:
-      - PORT=7001
-      - ENDPOINT=sirius
-    command: sh entrypoint.sh
-    volumes:
-      - ./sirius/:/src/app/
+    build: ./sirius
   orion:
-    image: node:8.10
-    working_dir: /src/app
-    environment:
-      - PORT=7002
-    command: sh entrypoint.sh
-    volumes:
-      - ./orion/:/src/app/
-  nginx:
-    build: ./nginx
+    build: ./orion
+  deployment:
+    build: ./deployment
     ports:
       - 80:8080
     volumes:
-      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./orion/build:/var/www/dashboard
-      - ./sirius/build:/var/www/user-interface
+      - ./deployment/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
     cap_drop:
       - ALL
     depends_on:
       - centaurus
+      - orion
+      - sirius

@@ -1,0 +1,51 @@
+server {
+    listen 8080;
+    location /api/ {
+      proxy_pass http://centaurus:7000/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /dashboard/ {
+      proxy_pass http://orion:8080/dashboard/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /user-interface/ {
+      proxy_pass http://sirius:8080/user-interface/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /user-interface/Pipelines {
+      proxy_pass http://sirius:8080/user-interface/Pipelines/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /user-interface/Components {
+      proxy_pass http://sirius:8080/user-interface/Components/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /user-interface/Classes {
+      proxy_pass http://sirius:8080/user-interface/Classes/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Host $server_name;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
+
+}
